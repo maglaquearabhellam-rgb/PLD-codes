@@ -1,0 +1,97 @@
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <vector>
+#include <cctype>
+
+using namespace std;
+
+// Function to check if a character is a vowel
+bool isVowel(char c) {
+    c = tolower(c);
+    return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u');
+}
+
+// Function to remove punctuation from the end of a word
+string cleanWord(const string& word) {
+    if (word.empty()) return word;
+    int end = word.length() - 1;
+    while (end >= 0 && !isalnum(word[end])) {
+        end--;
+    }
+    return (end >= 0) ? word.substr(0, end + 1) : "";
+}
+
+// Main function based on the whiteboard instructions
+string modifySentence(string sentence) {
+    stringstream ss(sentence);
+    vector<string> words;
+    string temp;
+    
+    // Extract all words from the sentence
+    while (ss >> temp) {
+        words.push_back(temp);
+    }
+    
+    if (words.empty()) return sentence;
+    
+    // Get the last word and clean its punctuation for inspection
+    string lastWordWithPunct = words.back();
+    string cleanedLastWord = cleanWord(lastWordWithPunct);
+    
+    if (cleanedLastWord.empty()) return sentence;
+    
+    char lastChar = cleanedLastWord.back();
+    
+    // Update the last word without punctuation for manipulation
+    words.back() = cleanedLastWord;
+    
+    // Extract any trailing punctuation (if any)
+    string punctuation = "";
+    for (int i = lastWordWithPunct.length() - 1; i >= 0; i--) {
+        if (!isalnum(lastWordWithPunct[i])) {
+            punctuation = lastWordWithPunct[i] + punctuation;
+        } else {
+            break;
+        }
+    }
+
+    string result = "";
+    
+    if (isVowel(lastChar)) {
+        // Case 1: Ends with a vowel -> Append "yay" to the very end
+        for (size_t i = 0; i < words.size(); i++) {
+            result += words[i];
+            if (i < words.size() - 1) result += " ";
+        }
+        result += " yay" + punctuation;
+    } else {
+        // Case 2: Does not end with a vowel -> Move the original last word to the front and append "nay"
+        string originalLast = words.back();
+        words.pop_back(); // Temporarily remove from the end
+        
+        // Put it at the front
+        result = originalLast + " ";
+        for (size_t i = 0; i < words.size(); i++) {
+            result += words[i];
+            if (i < words.size() - 1) result += " ";
+        }
+        if (!words.empty()) result += " ";
+        result += originalLast + " nay" + punctuation;
+    }
+    
+    return result;
+}
+
+int main() {
+    string test1 = "the big area";
+    string test2 = "code fast and test.";
+    
+    cout << "Input:  \"" << test1 << "\"\n";
+    cout << "Output: \"" << modifySentence(test1) << "\"\n\n";
+    
+    cout << "Input:  \"" << test2 << "\"\n";
+    cout << "Output: \"" << modifySentence(test2) << "\"\n";
+    
+    return 0;
+}
