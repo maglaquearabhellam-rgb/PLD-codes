@@ -82,16 +82,3 @@ string modifySentence(string sentence) {
     
     return result;
 }
-
-int main() {
-    string test1 = "the big area";
-    string test2 = "code fast and test.";
-    
-    cout << "Input:  \"" << test1 << "\"\n";
-    cout << "Output: \"" << modifySentence(test1) << "\"\n\n";
-    
-    cout << "Input:  \"" << test2 << "\"\n";
-    cout << "Output: \"" << modifySentence(test2) << "\"\n";
-    
-    return 0;
-}
