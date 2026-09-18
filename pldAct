@@ -96,3 +96,67 @@ int main() {
     
     return 0;
 }
+
+
+
+psuedocode
+
+Step 1: Remove trailing punctuation from the end
+CleanSentence = RemovePunctuation(sentence)
+// Step 2: Split the sentence into words and get the last word
+WordsList = SplitIntoWords(CleanSentence)
+LastWord = WordsList.Last
+// Step 3: Get the last letter of the last word and convert to lowercase
+LastLetter = LastWord.Last.ToLower
+// Step 4: Check if the last letter is a vowel or a consonant
+If LastLetter Is In {"a", "e", "i", "o", "u"} Then
+// If it's a vowel, append "yay" to the end of CleanSentence
+ModifiedSentence = CleanSentence + " yay"
+Else
+// If it's a consonant, remove the last word from the end and insert it at the beginning
+WordsList.RemoveAt(WordsList.Count - 1)
+WordsList.Insert(0, LastWord)
+// Join the words back together and append "nay" to the end
+ModifiedSentence = JoinWords(WordsList) + " nay"
+End If
+// Return the final result
+Return ModifiedSentence
+End Function
+
+
+
+flowchart
+Oval Shape] -> Start
+|
+v
+[Parallelogram Shape] -> Input: sentence
+|
+v
+[Rectangle Shape] -> Process: Clean trailing punctuation, extract LastWord, extract LastLetter, and make it lowercase.
+|
+v
+[Diamond Shape] -> Decision: Is LastLetter a vowel? (a, e, i, o, u)
+|
++---> [YES / TRUE] ---> [Rectangle Shape] -> Append " yay" to CleanSentence
+|                          |
+|                          v
+|                     [Connector]
+|
++---> [NO / FALSE] ---> [Rectangle Shape] -> 1. Prepend LastWord to list
+-> 2. Remove LastWord from end
+-> 3. Join words
+-> 4. Append " nay" to end
+|
+v
+[Connector]
+|
+v
+[Parallelogram Shape] -> Output: ModifiedSentence
+|
+v
+[Oval Shape] -> End
+
+
+
+
+
