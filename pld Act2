@@ -64,3 +64,56 @@ int main() {
     
     return 0;
 }
+
+
+Oval Shape] -> Start
+|
+v
+[Parallelogram Shape] -> Input: sentence
+|
+v
+[Rectangle Shape] -> Process: Clean trailing punctuation, split sentence into words, extract LastWord, and get its first letter (lowercase).
+|
+v
+[Diamond Shape] -> Decision: Does LastWord start with a vowel? (a, e, i, o, u)
+|
++---> [YES / TRUE] ---> [Rectangle Shape] -> Remove the first word of the entire sentence.
+|                          |
+|                          v
+|                     [Connector]
+|
++---> [NO / FALSE] ---> [Rectangle Shape] -> Insert the word "definitely" immediately before the last word.
+|
+v
+[Connector]
+|
+v
+[Parallelogram Shape] -> Output: ModifiedSentence
+|
+v
+[Oval Shape] -> End
+
+
+
+psuedo
+Step 1: Remove trailing punctuation from the end
+CleanSentence = RemovePunctuation(sentence)
+// Step 2: Split the sentence into an array or list of words
+WordsList = SplitIntoWords(CleanSentence)
+// Step 3: Get the last word and its starting (first) letter
+LastWord = WordsList.Last
+FirstLetter = Lowercase(LastWord[0])
+// Step 4: Check if the starting letter of the last word is a vowel
+If FirstLetter == 'a' OR FirstLetter == 'e' OR FirstLetter == 'i' OR FirstLetter == 'o' OR FirstLetter == 'u' Then
+// If it starts with a vowel, remove the first word of the entire sentence
+WordsList.RemoveAt(0)
+ModifiedSentence = JoinWords(WordsList)
+Else
+// If it starts with a consonant, insert the word "definitely" immediately before the last word
+InsertIndex = WordsList.Count - 1
+WordsList.Insert(InsertIndex, "definitely")
+ModifiedSentence = JoinWords(WordsList)
+End If
+// Step 5: Return the final modified sentence
+Return ModifiedSentence
+End Function
